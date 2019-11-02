@@ -2,7 +2,7 @@
 
 [![jdk11](https://img.shields.io/badge/java-11-blue.svg)](http://jdk.java.net/11)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/858e6fe4bd41487fb8dcfef3450dfc6c)](https://www.codacy.com?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=matteodri/owl-energy-monitor&amp;utm_campaign=Badge_Grade)
-
+[![CircleCI](https://circleci.com/gh/matteodri/owl-energy-monitor.svg?style=svg)](https://circleci.com/gh/matteodri/owl-energy-monitor)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 ## Purpose
