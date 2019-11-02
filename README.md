@@ -25,7 +25,6 @@ Information on message format can be found here: [Multicast and UDP API informat
 
 ## Deployment
 
-
 ## License
 
 >MIT License
