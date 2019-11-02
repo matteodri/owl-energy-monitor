@@ -6,6 +6,6 @@ module com.matteodri.owl.energy.monitor {
     requires java.sql;
     requires org.apache.logging.log4j;
     opens com.matteodri.owlenergymonitor;
-    opens com.matteodri.owlenergymonitor.services;
+    //opens com.matteodri.owlenergymonitor.services;
     opens com.matteodri.owlenergymonitor.util;
 }
