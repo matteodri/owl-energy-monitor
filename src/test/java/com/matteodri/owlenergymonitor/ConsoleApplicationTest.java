@@ -51,7 +51,7 @@ public class ConsoleApplicationTest {
                 }
             }).start();
 
-            Thread.sleep(200L);
+            Thread.sleep(400L);
 
             publishMessage(multicastAddress, multicastPort, payload);
         } catch (Exception ioe) {
@@ -67,8 +67,7 @@ public class ConsoleApplicationTest {
         InetAddress group = InetAddress.getByName(multicastAddress);
         byte[] buffer = payload.getBytes();
 
-        DatagramPacket packet
-            = new DatagramPacket(buffer, buffer.length, group, multicastPort);
+        DatagramPacket packet = new DatagramPacket(buffer, buffer.length, group, multicastPort);
         socket.send(packet);
         socket.close();
 

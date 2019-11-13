@@ -13,7 +13,7 @@ public enum Rate {
      * These are defined as:
      * - F1 (peak times): Monday to Friday from 8.00 till 19.00. Excluding national holidays.
      * - F2 (intermediate times): Monday to Friday from 7.00 till 8.00 and from 19.00 till 23.00;
-     *                            Saturday from 7.00 till 23.00. Excluding national holidays.
+     * Saturday from 7.00 till 23.00. Excluding national holidays.
      * - F3 (off peak): Monday to Saturday from 23.00 till 7.00. All day on Sunday and national holidays.
      *
      * @param timestamp timestamp for which the rate should be determined
@@ -24,16 +24,16 @@ public enum Rate {
         List<LocalDate> nationalHolidays = italianNationalHolidays(year);
 
         // National holidays are all in F3
-        if (nationalHolidays.contains(timestamp.toLocalDate())){
+        if (nationalHolidays.contains(timestamp.toLocalDate())) {
             return F3;
         }
 
         if (!timestamp.getDayOfWeek().equals(DayOfWeek.SATURDAY) && !timestamp.getDayOfWeek().equals(DayOfWeek.SUNDAY)
-            && timestamp.getHour() >= 8 && timestamp.getHour() < 19){
+                && timestamp.getHour() >= 8 && timestamp.getHour() < 19) {
             return F1;
 
         } else if (timestamp.getDayOfWeek().equals(DayOfWeek.SUNDAY)
-                   || (timestamp.getHour() >= 23 || timestamp.getHour() < 7)){
+                || (timestamp.getHour() >= 23 || timestamp.getHour() < 7)) {
             return F3;
 
         } else {
@@ -43,19 +43,18 @@ public enum Rate {
 
     private static List<LocalDate> italianNationalHolidays(int year) {
         LocalDate easter = easterDate(year);
-        List<LocalDate> holidays = List.of(
-            LocalDate.of(year, 1, 1), // Capodanno
-            LocalDate.of(year, 1, 6),  // Epifania
-            easter,  // Pasqua
-            easter.plusDays(1),  // Lunedì dell'angelo
-            LocalDate.of(year, 4, 25),  // Festa della liberazione
-            LocalDate.of(year, 5, 1),  // Festa del lavoro
-            LocalDate.of(year, 6, 2),  // Festa della repubblica
-            LocalDate.of(year, 8, 15),  // Assunzione di Maria
-            LocalDate.of(year, 11, 1),  // Tutti i santi
-            LocalDate.of(year, 12, 8),  // Immacolata concezione
-            LocalDate.of(year, 12, 25),  // Natale
-            LocalDate.of(year, 12, 26)  // Santo Stefano
+        List<LocalDate> holidays = List.of(LocalDate.of(year, 1, 1), // Capodanno
+                LocalDate.of(year, 1, 6), // Epifania
+                easter, // Pasqua
+                easter.plusDays(1), // Lunedì dell'angelo
+                LocalDate.of(year, 4, 25), // Festa della liberazione
+                LocalDate.of(year, 5, 1), // Festa del lavoro
+                LocalDate.of(year, 6, 2), // Festa della repubblica
+                LocalDate.of(year, 8, 15), // Assunzione di Maria
+                LocalDate.of(year, 11, 1), // Tutti i santi
+                LocalDate.of(year, 12, 8), // Immacolata concezione
+                LocalDate.of(year, 12, 25), // Natale
+                LocalDate.of(year, 12, 26) // Santo Stefano
         );
         return holidays;
     }

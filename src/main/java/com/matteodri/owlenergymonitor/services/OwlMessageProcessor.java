@@ -17,10 +17,9 @@ import org.springframework.stereotype.Service;
 public class OwlMessageProcessor {
     private static final Logger logger = LogManager.getLogger(OwlMessageProcessor.class);
 
-    public OwlMessageProcessor() {
-    }
+    public OwlMessageProcessor() {}
 
-    public void process(InetAddress fromAddress, String message){
+    public void process(InetAddress fromAddress, String message) {
         logger.debug("Message received from {}: {}", fromAddress, message);
     }
 
