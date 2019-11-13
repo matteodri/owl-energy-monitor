@@ -25,8 +25,19 @@ public class ConsoleApplication implements CommandLineRunner {
 
     private static final Logger logger = LogManager.getLogger(ConsoleApplication.class);
 
-    public static final String DEFAULT_MULTICAST_ADDRESS = "224.192.32.19";
-    public static final int DEFAULT_MULTICAST_PORT = 22600;
+    private static final String DEFAULT_MULTICAST_ADDRESS = "224.192.32.19";
+    private static final int DEFAULT_MULTICAST_PORT = 22600;
+
+    private String multicastAddress = DEFAULT_MULTICAST_ADDRESS;
+    private int multicastPort = DEFAULT_MULTICAST_PORT;
+
+    public void setMulticastAddress(String multicastAddress) {
+        this.multicastAddress = multicastAddress;
+    }
+
+    public void setMulticastPort(int multicastPort) {
+        this.multicastPort = multicastPort;
+    }
 
     @Autowired
     private OwlMessageProcessor owlMessageProcessor;
@@ -41,16 +52,14 @@ public class ConsoleApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        String ipAddress = DEFAULT_MULTICAST_ADDRESS;
-        int port = DEFAULT_MULTICAST_PORT;
         MulticastSocket socket = null;
         DatagramPacket inPacket = null;
         byte[] inBuf = new byte[256];
         try {
-            socket = new MulticastSocket(port);
-            InetAddress address = InetAddress.getByName(ipAddress);
+            socket = new MulticastSocket(multicastPort);
+            InetAddress address = InetAddress.getByName(multicastAddress);
             socket.joinGroup(address);
-            logger.info("Listening to multicast address " + ipAddress + ":" + port + "...");
+            logger.info("Listening to multicast address " + multicastAddress + ":" + multicastPort + "...");
             while (true) {
                 inPacket = new DatagramPacket(inBuf, inBuf.length);
                 socket.receive(inPacket);
