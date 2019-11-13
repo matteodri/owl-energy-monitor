@@ -24,6 +24,19 @@ Information on message format can be found here: [Multicast and UDP API informat
 ## Requirements
 
 ## Deployment
+Check if code doesn't comply with formatting template:
+
+`mvn spotless:check`
+
+
+Apply Spotless code formatting:
+
+`mvn spotless:apply`
+
+Create package to export:
+
+`mvn clean package`
+
 
 ## License
 
