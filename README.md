@@ -24,7 +24,7 @@ Information on message format can be found here: [Multicast and UDP API informat
 ## Requirements
 
 ## Build
-Check if code doesn't comply with formatting template:
+Check if code complies with formatting template:
 
 `mvn spotless:check`
 
@@ -32,10 +32,23 @@ Apply Spotless code formatting:
 
 `mvn spotless:apply`
 
-Create package to export:
+
+Build the Docker image
 
 `mvn clean package`
 
+Push image to the registry:
+
+`mvn deploy`
+
+## Run
+Build, create, start, and attach to the containers of the Owl Energy Monitor service with Docker Compose.
+
+`docker-compose -f docker/docker-compose.yml up`
+
+Build, create and start a specific container.
+
+`docker-compose -f docker/docker-compose.yml up -d prometheus`
 
 ## License
 

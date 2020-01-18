@@ -23,6 +23,7 @@
     <maven-surefire-plugin.version>2.22.2</maven-surefire-plugin.version>
     <jacoco-maven-plugin.version>0.8.5</jacoco-maven-plugin.version>
     <spotless-maven-plugin.version>1.26.0</spotless-maven-plugin.version>
+    <dockerfile-maven.version>1.4.13</dockerfile-maven.version>
   </properties>
 
   <dependencies>
@@ -104,6 +105,26 @@
             </manifestEntries>
           </archive>
         </configuration>
+      </plugin>
+
+      <plugin>
+        <groupId>com.spotify</groupId>
+        <artifactId>dockerfile-maven-plugin</artifactId>
+        <version>${dockerfile-maven.version}</version>
+        <executions>
+          <execution>
+            <id>default</id>
+            <goals>
+              <goal>build</goal>
+              <!-- <goal>push</goal> -->
+            </goals>
+            <configuration>
+              <repository>matteodri/owl-energy-monitor</repository>
+              <dockerfile>src/docker/Dockerfile</dockerfile>
+              <tag>${project.version}</tag>
+            </configuration>
+          </execution>
+        </executions>
       </plugin>
 
       <plugin>
