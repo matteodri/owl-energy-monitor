@@ -22,7 +22,7 @@
     <org.mockito.version>3.1.0</org.mockito.version>
     <maven-surefire-plugin.version>2.22.2</maven-surefire-plugin.version>
     <jacoco-maven-plugin.version>0.8.5</jacoco-maven-plugin.version>
-    <spotless-maven-plugin.version>1.26.0</spotless-maven-plugin.version>
+    <spotless-maven-plugin.version>1.27.0</spotless-maven-plugin.version>
     <dockerfile-maven.version>1.4.13</dockerfile-maven.version>
   </properties>
 
@@ -49,6 +49,13 @@
       <groupId>com.diffplug.spotless</groupId>
       <artifactId>spotless-maven-plugin</artifactId>
       <version>${spotless-maven-plugin.version}</version>
+      <scope>test</scope>
+      <exclusions>
+        <exclusion>
+          <groupId>org.codehaus.plexus</groupId>
+          <artifactId>plexus-container-default</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
 
     <dependency>
@@ -107,7 +114,7 @@
         </configuration>
       </plugin>
 
-      <plugin>
+      <!--<plugin>
         <groupId>com.spotify</groupId>
         <artifactId>dockerfile-maven-plugin</artifactId>
         <version>${dockerfile-maven.version}</version>
@@ -116,7 +123,7 @@
             <id>default</id>
             <goals>
               <goal>build</goal>
-              <!-- <goal>push</goal> -->
+              &lt;!&ndash; <goal>push</goal> &ndash;&gt;
             </goals>
             <configuration>
               <repository>matteodri/owl-energy-monitor</repository>
@@ -125,7 +132,7 @@
             </configuration>
           </execution>
         </executions>
-      </plugin>
+      </plugin>-->
 
       <plugin>
         <groupId>org.jacoco</groupId>

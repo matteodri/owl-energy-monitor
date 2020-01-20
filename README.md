@@ -32,7 +32,6 @@ Apply Spotless code formatting:
 
 `mvn spotless:apply`
 
-
 Build the Docker image
 
 `mvn clean package`
@@ -42,6 +41,10 @@ Push image to the registry:
 `mvn deploy`
 
 ## Run
+Run owl-energy-monitor Spring Boot application only with Java command:
+
+`java -jar target/owl-energy-monitor-<version>.jar`
+
 Build, create, start, and attach to the containers of the Owl Energy Monitor service with Docker Compose.
 
 `docker-compose -f docker/docker-compose.yml up`
