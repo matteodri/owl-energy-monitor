@@ -46,14 +46,43 @@
     </dependency>
 
     <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-actuator</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-web</artifactId>
+    </dependency>
+
+<!--    <dependency>
+      <groupId>org.springframework.metrics</groupId>
+      <artifactId>spring-metrics</artifactId>
+      <version>${metrics.version}</version>
+    </dependency>
+
+    <dependency>
+      <group>io.prometheus</group>
+      <artifact>simpleclient_common</artifact>
+      <version>${prom.version}</version>
+    </dependency>-->
+
+    <dependency>
       <groupId>com.diffplug.spotless</groupId>
       <artifactId>spotless-maven-plugin</artifactId>
       <version>${spotless-maven-plugin.version}</version>
-      <scope>test</scope>
       <exclusions>
         <exclusion>
           <groupId>org.codehaus.plexus</groupId>
           <artifactId>plexus-container-default</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.codehaus.groovy</groupId>
+          <artifactId>groovy-xml</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.codehaus.groovy</groupId>
+          <artifactId>groovy</artifactId>
         </exclusion>
       </exclusions>
     </dependency>
@@ -114,7 +143,7 @@
         </configuration>
       </plugin>
 
-      <!--<plugin>
+      <plugin>
         <groupId>com.spotify</groupId>
         <artifactId>dockerfile-maven-plugin</artifactId>
         <version>${dockerfile-maven.version}</version>
@@ -123,16 +152,16 @@
             <id>default</id>
             <goals>
               <goal>build</goal>
-              &lt;!&ndash; <goal>push</goal> &ndash;&gt;
+              <!-- <goal>push</goal> -->
             </goals>
             <configuration>
               <repository>matteodri/owl-energy-monitor</repository>
-              <dockerfile>src/docker/Dockerfile</dockerfile>
+              <dockerfile>docker/owlenergymonitor/Dockerfile</dockerfile>
               <tag>${project.version}</tag>
             </configuration>
           </execution>
         </executions>
-      </plugin>-->
+      </plugin>
 
       <plugin>
         <groupId>org.jacoco</groupId>

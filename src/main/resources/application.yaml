@@ -1,0 +1,14 @@
+spring:
+  profiles:
+    active: local
+  application:
+    name: owl-energy-monitor
+
+server:
+  port: 7001
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics

@@ -51,7 +51,7 @@ public class ConsoleApplicationTest {
                 }
             }).start();
 
-            Thread.sleep(400L);
+            Thread.sleep(500L);
 
             publishMessage(multicastAddress, multicastPort, payload);
         } catch (Exception ioe) {

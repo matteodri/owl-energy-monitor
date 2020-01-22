@@ -1,0 +1,35 @@
+global:
+  scrape_interval: 5s
+  scrape_timeout: 2s
+  evaluation_interval: 5s
+
+
+# Scrape configurations - set of targets to be scraped.
+scrape_configs:
+
+  # Prometheus
+  - job_name: 'prometheus'
+    metrics_path: '/metrics'
+    scheme: 'http'
+    static_configs:
+      - targets: ['localhost:9090']
+        labels:
+          service_name: prometheus
+
+  # Owl Energy Monitor
+  - job_name: 'owl-energy-monitor'
+    metrics_path: '/actuator/metrics'
+    scheme: 'http'
+    static_configs:
+      - targets: ['owl-energy-monitor:7001']
+        labels:
+          service_name: owl-energy-monitor
+
+  # cAdvisor
+  - job_name: 'cadvisor'
+    metrics_path: '/metrics'
+    scheme: 'http'
+    static_configs:
+      - targets: ['cadvisor:8001']
+        labels:
+          service_name: cAdvisor

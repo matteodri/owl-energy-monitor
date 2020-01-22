@@ -1,0 +1,100 @@
+version: '2.4'
+services:
+
+  ###############################################
+  ##                Prometheus                 ##
+  ###############################################
+  prometheus:
+    container_name: prometheus
+    hostname: prometheus
+    build: ./prometheus/
+    command: ["--config.file=/etc/prometheus/config/prometheus.yml", "--storage.tsdb.retention.time=168h"]
+    user: root
+    mem_limit: 512m
+    memswap_limit: 512m
+    ports:
+      - "9090:9090"
+    networks:
+      - local
+    volumes:
+      - /data/owl-energy-monitor/prometheus/:/prometheus
+    healthcheck:
+      test: ["CMD", "wget", "-S", "--spider", "http://localhost:9090/status"]
+      interval: 20s
+      timeout: 10s
+      retries: 5
+    restart: always
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  ###############################################
+  ##           Monitoring cAdvisor             ##
+  ###############################################
+  cadvisor:
+    container_name: cadvisor
+    image: google/cadvisor:v0.33.0
+    ports:
+      - "8001:8080"
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:rw
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+      - /dev/disk/:/dev/disk:ro
+    privileged: true
+    networks:
+      - local
+    healthcheck:
+      test: ["CMD", "wget", "http://localhost:8080/healthz"]
+      interval: 20s
+      timeout: 10s
+      retries: 5
+    restart: always
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+
+  ###############################################
+  ##                Application                ##
+  ###############################################
+  owl-energy-monitor:
+    container_name: owl-energy-monitor
+    hostname: owl-energy-monitor
+    image: matteodri/owl-energy-monitor:0.1.0-SNAPSHOT
+    ports:
+      - "7001:7001"
+      - "7002:7002"
+      - "7003:7003"
+    networks:
+      - local
+    depends_on:
+      prometheus:
+        condition: service_healthy
+      cadvisor:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-sl", "-I", "http://localhost:7001/actuator/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+    restart: always
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+
+###############################################
+##                 Network                   ##
+###############################################
+
+networks:
+  local:
+    driver: bridge
