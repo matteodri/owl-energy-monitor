@@ -31,6 +31,34 @@ services:
         max-file: "3"
 
   ###############################################
+  ##                Grafana                    ##
+  ###############################################
+  grafana:
+    container_name: grafana
+    build: ./grafana/
+    user: "0"
+    ports:
+    - "6001:3000"
+    networks:
+      - local
+    volumes:
+    - /data/owl-energy-monitor/grafana/:/var/lib/grafana
+    depends_on:
+      prometheus:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-sl", "-I", "http://localhost:3000/api/health"]
+      interval: 20s
+      timeout: 10s
+      retries: 5
+    restart: always
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  ###############################################
   ##           Monitoring cAdvisor             ##
   ###############################################
   cadvisor:
