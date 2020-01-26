@@ -18,7 +18,7 @@ scrape_configs:
 
   # Owl Energy Monitor
   - job_name: 'owl-energy-monitor'
-    metrics_path: '/actuator/metrics'
+    metrics_path: '/actuator/prometheus'
     scheme: 'http'
     static_configs:
       - targets: ['owl-energy-monitor:7001']
