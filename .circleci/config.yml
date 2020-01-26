@@ -37,6 +37,9 @@ jobs:
         - ~/.m2
         key: v1-dependencies-{{ checksum "pom.xml" }}
 
+    # Create a separate environment to execute docker commands
+    - setup_remote_docker
+
     # run tests!
     - run: mvn integration-test
     - run: mvn com.gavinmogan:codacy-maven-plugin:coverage -DcoverageReportFile=target/site/jacoco/jacoco.xml -DprojectToken=fe29213ac4d24e9eaf26d5c7d7cd96d5 -DapiToken=fe29213ac4d24e9eaf26d5c7d7cd96d5
