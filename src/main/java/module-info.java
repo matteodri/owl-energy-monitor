@@ -5,6 +5,8 @@ module com.matteodri.owl.energy.monitor {
     requires spring.context;
     requires java.sql;
     requires org.apache.logging.log4j;
+    requires spring.boot.actuator.autoconfigure;
+    requires micrometer.core;
     opens com.matteodri.owlenergymonitor;
     opens com.matteodri.owlenergymonitor.services;
     opens com.matteodri.owlenergymonitor.util;

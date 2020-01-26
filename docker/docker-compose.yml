@@ -104,8 +104,6 @@ services:
     depends_on:
       prometheus:
         condition: service_healthy
-      cadvisor:
-        condition: service_healthy
     healthcheck:
       test: ["CMD", "curl", "-sl", "-I", "http://localhost:7001/actuator/health"]
       interval: 30s
