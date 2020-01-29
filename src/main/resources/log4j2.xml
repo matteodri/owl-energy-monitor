@@ -6,7 +6,7 @@
     </Console>
   </Appenders>
   <Loggers>
-    <Logger name="com.matteodri.owlenergymonitor.services.OwlMessageProcessor" level="DEBUG"/>
+    <Logger name="com.matteodri.owlenergymonitor.services.OwlMessageProcessorImpl" level="DEBUG"/>
 
     <Root level="INFO">
       <AppenderRef ref="Console"/>
