@@ -5,9 +5,13 @@ import java.net.InetAddress;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.google.common.util.concurrent.AtomicDouble;
+import com.matteodri.owlenergymonitor.model.electricity.Electricity;
+import com.matteodri.owlenergymonitor.model.solar.Solar;
+import com.matteodri.owlenergymonitor.util.MeasurementsUnmarshaller;
 
 import io.micrometer.core.instrument.Gauge;
 import io.micrometer.core.instrument.MeterRegistry;
@@ -30,6 +34,9 @@ public class OwlMessageProcessorImpl implements OwlMessageProcessor {
     private AtomicDouble todaysElectricityGenerated = new AtomicDouble(0);
     private AtomicDouble todaysElectricityExported = new AtomicDouble(0);
 
+    @Autowired
+    private MeasurementsUnmarshaller measurementsUnmarshaller;
+
     public OwlMessageProcessorImpl(MeterRegistry meterRegistry) {
         this.meterRegistry = meterRegistry;
 
@@ -40,16 +47,55 @@ public class OwlMessageProcessorImpl implements OwlMessageProcessor {
     public void process(InetAddress fromAddress, String message) {
         logger.debug("Message received from {}: {}", fromAddress, message);
 
-        // TODO parse message
+        if (message.startsWith("<electricity")) {
+            // it's an electricity measurement summary
+            Electricity electricityMeasurement = measurementsUnmarshaller.unmarshalElectricityXml(message);
 
-        // TODO replace with real values from intuition message
-        currentElectricityConsumption.set((int) (Math.random() * 100));
-        todaysElectricityConsumption.set((int) (Math.random() * 100));
-        currentBatteryLevel.set((int) (Math.random() * 100));
-        currentElectricityGenerated.set((int) (Math.random() * 100));
-        currentElectricityExported.set((int) (Math.random() * 100));
-        todaysElectricityGenerated.set((int) (Math.random() * 100));
-        todaysElectricityExported.set((int) (Math.random() * 100));
+            if (electricityMeasurement != null && electricityMeasurement.getChannels() != null
+                    && electricityMeasurement.getChannels().size() >= 1) {
+                if (electricityMeasurement.getChannels().get(0).getElectricityCurrent() != null) {
+                    currentElectricityConsumption
+                            .set(electricityMeasurement.getChannels().get(0).getElectricityCurrent().getValue());
+                }
+                if (electricityMeasurement.getChannels().get(0).getElectricityDay() != null) {
+                    todaysElectricityConsumption
+                            .set(electricityMeasurement.getChannels().get(0).getElectricityDay().getValue());
+                }
+            }
+
+            if (electricityMeasurement != null && electricityMeasurement.getBattery() != null) {
+                currentBatteryLevel.set(parsePercentage(electricityMeasurement.getBattery().getLevel()));
+            }
+
+            logger.debug(
+                    "Metrics set:\ncurrentElectricityConsumption={}, todaysElectricityConsumption={}, "
+                            + "currentBatteryLevel={}",
+                    currentElectricityConsumption, todaysElectricityConsumption, currentBatteryLevel);
+        } else {
+            // it's a solar measurement summary
+            Solar solarMeasurement = measurementsUnmarshaller.unmarshalSolarXml(message);
+
+            if (solarMeasurement != null && solarMeasurement.getSolarCurrent() != null) {
+                if (solarMeasurement.getSolarCurrent().getGenerating() != null) {
+                    currentElectricityGenerated.set(solarMeasurement.getSolarCurrent().getGenerating().getValue());
+                }
+                if (solarMeasurement.getSolarCurrent().getExporting() != null) {
+                    currentElectricityExported.set(solarMeasurement.getSolarCurrent().getExporting().getValue());
+                }
+
+                if (solarMeasurement.getSolarDay().getGenerated() != null) {
+                    todaysElectricityGenerated.set(solarMeasurement.getSolarDay().getGenerated().getValue());
+                }
+                if (solarMeasurement.getSolarDay().getExported() != null) {
+                    todaysElectricityExported.set(solarMeasurement.getSolarDay().getExported().getValue());
+                }
+            }
+            logger.debug(
+                    "Metrics set:\ncurrentElectricityGenerated={}, currentElectricityExported={}, "
+                            + "todaysElectricityGenerated={}, todaysElectricityExported={}",
+                    currentElectricityGenerated, currentElectricityExported, todaysElectricityGenerated,
+                    todaysElectricityExported);
+        }
     }
 
     private void setupMetrics(MeterRegistry meterRegistry) {
@@ -67,6 +113,25 @@ public class OwlMessageProcessorImpl implements OwlMessageProcessor {
                 .description("Today's generated electricity (Wh)").register(meterRegistry);
         Gauge.builder("electricity_exported_today", todaysElectricityExported, AtomicDouble::get)
                 .description("Today's exported electricity (Wh)").register(meterRegistry);
+    }
+
+    /**
+     * Given an input string like "56%" returns the floating-point percentage value (56.0). If format is not correct it
+     * will return -1. This is intentional as to make it visible when metric is changing to -1.
+     *
+     * @param strPercentage percentage in string format including a trailing '%' sign
+     * @return floating-point representation of percentage value
+     */
+    private double parsePercentage(String strPercentage) {
+        double returnValue = -1;
+        if (strPercentage != null && !strPercentage.isEmpty() && strPercentage.endsWith("%")) {
+            try {
+                returnValue = Double.valueOf(strPercentage.substring(0, strPercentage.indexOf('%')));
+            } catch (NumberFormatException e) {
+                logger.warn("Error parsing percentage '{}'", strPercentage);
+            }
+        }
+        return returnValue;
     }
 
 }

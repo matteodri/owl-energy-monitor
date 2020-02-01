@@ -54,7 +54,7 @@ public class ConsoleApplication implements CommandLineRunner {
     public void run(String... args) throws Exception {
         MulticastSocket socket = null;
         DatagramPacket inPacket = null;
-        byte[] inBuf = new byte[256];
+        byte[] inBuf = new byte[2048];
         try {
             socket = new MulticastSocket(multicastPort);
             InetAddress address = InetAddress.getByName(multicastAddress);
