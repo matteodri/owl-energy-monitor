@@ -42,7 +42,9 @@ services:
     networks:
       - local
     volumes:
-    - /data/owl-energy-monitor/grafana/:/var/lib/grafana
+      - type: volume
+        source: dashboards
+        target: /var/lib/grafana
     depends_on:
       prometheus:
         condition: service_healthy
@@ -125,3 +127,10 @@ services:
 networks:
   local:
     driver: bridge
+
+###############################################
+##              Named Volumes                ##
+###############################################
+
+volumes:
+  dashboards:

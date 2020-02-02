@@ -4,6 +4,7 @@ LABEL maintainer="Matteo Dri" \
       description="Grafana image"
 
 COPY ./datasources/ /etc/grafana/provisioning/datasources/
-COPY ./dashboards/ /var/lib/grafana/dashboards/
+COPY ./dashboards/dashboards-conf.yml /etc/grafana/provisioning/dashboards/
+COPY ./dashboards/*.json /var/lib/grafana/dashboards/
 
 EXPOSE 3000
