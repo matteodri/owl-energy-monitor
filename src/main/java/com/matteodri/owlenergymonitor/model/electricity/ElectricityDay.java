@@ -8,7 +8,7 @@ import javax.xml.bind.annotation.XmlValue;
 public class ElectricityDay {
 
     private String units;
-    private Double value;
+    private Float value;
 
     public String getUnits() {
         return units;
@@ -19,12 +19,12 @@ public class ElectricityDay {
         this.units = units;
     }
 
-    public Double getValue() {
+    public Float getValue() {
         return value;
     }
 
     @XmlValue
-    public void setValue(Double value) {
+    public void setValue(Float value) {
         this.value = value;
     }
 
