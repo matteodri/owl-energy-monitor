@@ -40,7 +40,7 @@ public class OwlMessageProcessorImpl implements OwlMessageProcessor {
     public OwlMessageProcessorImpl(MeterRegistry meterRegistry) {
         this.meterRegistry = meterRegistry;
 
-        setupMetrics(meterRegistry);
+        setupMetrics(this.meterRegistry);
     }
 
     @Override

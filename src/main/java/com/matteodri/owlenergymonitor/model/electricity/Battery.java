@@ -6,7 +6,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "battery")
 public class Battery {
 
-    String level;
+    private String level;
 
     public String getLevel() {
         return level;

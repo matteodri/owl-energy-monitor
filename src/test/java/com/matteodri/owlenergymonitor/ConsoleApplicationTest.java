@@ -20,7 +20,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import com.matteodri.owlenergymonitor.services.OwlMessageProcessor;
 
 @ExtendWith(MockitoExtension.class)
-class ConsoleApplicationTest {
+public class ConsoleApplicationTest {
 
     @Mock
     private OwlMessageProcessor owlMessageProcessor;
@@ -30,7 +30,7 @@ class ConsoleApplicationTest {
 
     @Test
     @DisplayName("Message received on custom address")
-    void run() throws Exception {
+    public void run() throws Exception {
         String payload = "<these are the contents of a multicast message!>";
         String multicastAddress = "224.10.10.10";
         int multicastPort = 23456;

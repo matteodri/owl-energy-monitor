@@ -31,6 +31,9 @@ public class ConsoleApplication implements CommandLineRunner {
     private String multicastAddress = DEFAULT_MULTICAST_ADDRESS;
     private int multicastPort = DEFAULT_MULTICAST_PORT;
 
+    @Autowired
+    private OwlMessageProcessor owlMessageProcessor;
+
     public void setMulticastAddress(String multicastAddress) {
         this.multicastAddress = multicastAddress;
     }
@@ -38,9 +41,6 @@ public class ConsoleApplication implements CommandLineRunner {
     public void setMulticastPort(int multicastPort) {
         this.multicastPort = multicastPort;
     }
-
-    @Autowired
-    private OwlMessageProcessor owlMessageProcessor;
 
     public static void main(String[] args) throws Exception {
 

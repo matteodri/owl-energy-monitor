@@ -21,20 +21,20 @@ import com.matteodri.owlenergymonitor.model.solar.Solar;
 /**
  * Test class for {@link MeasurementsUnmarshaller}.
  */
-class MeasurementsUnmarshallerTest {
+public class MeasurementsUnmarshallerTest {
 
     public static final double FLOATING_COMPARISON_DELTA = 0.001d;
 
     private MeasurementsUnmarshaller target;
 
     @BeforeEach
-    void setUp() {
+    public void setUp() {
         target = new MeasurementsUnmarshaller();
     }
 
     @Test
     @DisplayName("Unmarshal an electricity message")
-    void testUnmarshalElectricityXml() {
+    public void testUnmarshalElectricityXml() {
         Electricity electricity = target.unmarshalElectricityXml("<electricity id='44371914D92A' ver='2.0'>"
                 + "  <timestamp>1580421382</timestamp>" + "  <signal rssi='-33' lqi='4'/>" + "  <battery level='100%'/>"
                 + "  <channels>" + "    <chan id='0'>" + "      <curr units='w'>333.00</curr>"
@@ -60,7 +60,7 @@ class MeasurementsUnmarshallerTest {
 
     @Test
     @DisplayName("Unmarshal an electricity malformed message")
-    void testUnmarshalElectricityMalformedXml() {
+    public void testUnmarshalElectricityMalformedXml() {
         Exception exception = assertThrows(IllegalArgumentException.class, () -> {
             target.unmarshalElectricityXml("< this is not XML>--..");
         });
@@ -70,7 +70,7 @@ class MeasurementsUnmarshallerTest {
 
     @Test
     @DisplayName("Unmarshal a solar message")
-    void testUnmarshalSolarXml() {
+    public void testUnmarshalSolarXml() {
         Solar solar =
                 target.unmarshalSolarXml("<solar id=\"44371914D92A\">\n" + "   <timestamp>1580417543</timestamp>\n"
                         + "   <current>\n" + "      <generating units=\"w\">250.00</generating>\n"
@@ -101,7 +101,7 @@ class MeasurementsUnmarshallerTest {
 
     @Test
     @DisplayName("Unmarshal a solar malformed message")
-    void testUnmarshalSolarMalformedXml() {
+    public void testUnmarshalSolarMalformedXml() {
         Exception exception = assertThrows(IllegalArgumentException.class, () -> {
             target.unmarshalSolarXml("< this is not XML>--..");
         });
