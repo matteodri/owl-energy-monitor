@@ -1,6 +1,5 @@
 package com.matteodri.owlenergymonitor;
 
-import static org.junit.Assert.fail;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.verify;
@@ -10,20 +9,18 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.matteodri.owlenergymonitor.services.OwlMessageProcessor;
 
 @ExtendWith(MockitoExtension.class)
-@RunWith(MockitoJUnitRunner.class)
-public class ConsoleApplicationTest {
+class ConsoleApplicationTest {
 
     @Mock
     private OwlMessageProcessor owlMessageProcessor;
@@ -47,16 +44,17 @@ public class ConsoleApplicationTest {
                     target.run();
                 } catch (Exception ioe) {
                     ioe.printStackTrace();
-                    fail();
+                    Assertions.fail();
                 }
             }).start();
 
-            Thread.sleep(500L);
+            Thread.sleep(2000L);
 
             publishMessage(multicastAddress, multicastPort, payload);
+
         } catch (Exception ioe) {
             ioe.printStackTrace();
-            fail();
+            Assertions.fail();
         }
 
         verify(owlMessageProcessor).process(any(InetAddress.class), eq(payload));
