@@ -36,9 +36,9 @@ class MeasurementsUnmarshallerTest {
     @DisplayName("Unmarshal an electricity message")
     void testUnmarshalElectricityXml() {
         Electricity electricity = target.unmarshalElectricityXml("<electricity id='44371914D92A' ver='2.0'>"
-            + "  <timestamp>1580421382</timestamp>" + "  <signal rssi='-33' lqi='4'/>" + "  <battery level='100%'/>"
-            + "  <channels>" + "    <chan id='0'>" + "      <curr units='w'>333.00</curr>"
-            + "      <day units='wh'>9608.41</day></chan>" + "  </channels>\n" + "</electricity>");
+                + "  <timestamp>1580421382</timestamp>" + "  <signal rssi='-33' lqi='4'/>" + "  <battery level='100%'/>"
+                + "  <channels>" + "    <chan id='0'>" + "      <curr units='w'>333.00</curr>"
+                + "      <day units='wh'>9608.41</day></chan>" + "  </channels>\n" + "</electricity>");
 
         assertNotNull(electricity);
         assertNotNull(electricity.getBattery());
@@ -72,11 +72,11 @@ class MeasurementsUnmarshallerTest {
     @DisplayName("Unmarshal a solar message")
     void testUnmarshalSolarXml() {
         Solar solar =
-            target.unmarshalSolarXml("<solar id=\"44371914D92A\">\n" + "   <timestamp>1580417543</timestamp>\n"
-                + "   <current>\n" + "      <generating units=\"w\">250.00</generating>\n"
-                + "      <exporting units=\"w\">17.50</exporting>\n" + "   </current>\n" + "   <day>\n"
-                + "      <generated units=\"wh\">11437.27</generated>\n"
-                + "      <exported units=\"wh\">7552.66</exported>\n" + "   </day>\n" + "</solar>");
+                target.unmarshalSolarXml("<solar id=\"44371914D92A\">\n" + "   <timestamp>1580417543</timestamp>\n"
+                        + "   <current>\n" + "      <generating units=\"w\">250.00</generating>\n"
+                        + "      <exporting units=\"w\">17.50</exporting>\n" + "   </current>\n" + "   <day>\n"
+                        + "      <generated units=\"wh\">11437.27</generated>\n"
+                        + "      <exported units=\"wh\">7552.66</exported>\n" + "   </day>\n" + "</solar>");
 
         assertNotNull(solar);
         assertNotNull(solar.getTimestamp());

@@ -42,4 +42,18 @@ jobs:
 
     # run tests!
     - run: mvn integration-test
+
+    # Upload coverage results to Codacy
     - run: mvn com.gavinmogan:codacy-maven-plugin:coverage -DcoverageReportFile=target/site/jacoco/jacoco.xml -DprojectToken=fe29213ac4d24e9eaf26d5c7d7cd96d5 -DapiToken=fe29213ac4d24e9eaf26d5c7d7cd96d5
+
+    # Save test results for web access
+    - run:
+        name: Save test results
+        command: |
+          mkdir -p ~/test-results/junit/
+          find . -type f -regex ".*/target/surefire-reports/.*xml" -exec cp {} ~/test-results/junit/ \;
+        when: always
+    - store_test_results:
+        path: ~/test-results
+    - store_artifacts:
+        path: ~/test-results/junit
