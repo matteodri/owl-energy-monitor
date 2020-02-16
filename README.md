@@ -62,6 +62,10 @@ Service ports as set in _docker-compose.yml_.
 * 7002 - JVM debug
 * 7003 - JMX
 
+**cAdvisor**
+
+* 8001 - Web endpoint
+
 **Prometheus**
 
 * 9090 - Web endpoint
