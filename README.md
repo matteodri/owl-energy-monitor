@@ -14,7 +14,7 @@ Integration has been tested using a [Owl Intuition-PV](http://www.theowl.com/ind
 [OWL Intuition](http://www.theowl.com/index.php/owl-intuition/) is an electricity monitoring system that can track electricity consumption and, in the PV version, record electricity produced from photovoltaic panels. Their software provides a way to monitor system electricity flows, keeping historical data that can be accessed, with some limitations, from their website. Measures are constantly published over multicast messages on the local network.
 
 ## Owl multicast messages
-The	Network	OWL	sends	UDP	packets	tothe	following	multicast	group:
+The	Network	OWL	sends	UDP	packets	to the	following	multicast	group:
 
     Address: 224.192.32.19
     Port: 22600
@@ -52,6 +52,26 @@ Build, create, start, and attach to the containers of the Owl Energy Monitor ser
 Build, create and start a specific container.
 
 `docker-compose -f docker/docker-compose.yml up -d prometheus`
+
+## Default endpoints
+Service ports as set in _docker-compose.yml_.
+
+**Owl Energy Monitor**
+
+* 7001 - Web endpoint
+* 7002 - JVM debug
+* 7003 - JMX
+
+**Prometheus**
+
+* 9090 - Web endpoint
+
+**Grafana**
+
+* 6001 - Web endpoint
+
+E.g. Grafana web console when running in localhost: <http://localhost:6001/>
+
 
 ## License
 

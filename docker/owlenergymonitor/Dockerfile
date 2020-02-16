@@ -22,4 +22,5 @@ ENTRYPOINT java -Djava.security.egd=file:/dev/./urandom \
 # 7001 - Web endpoint
 # 7002 - JVM debug
 # 7003 - JMX
-EXPOSE 7001 7002 7003
+# 22600 - UDP multicast
+EXPOSE 7001 7002 7003 22600/udp
