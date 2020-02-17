@@ -23,17 +23,15 @@ public class MeasurementsUnmarshaller {
 
     private static final Logger logger = LogManager.getLogger(OwlMessageProcessorImpl.class);
 
-    private JAXBContext electricityJaxbContext;
     private Unmarshaller electricityUnmarshaller;
-    private JAXBContext solarJaxbContext;
     private Unmarshaller solarUnmarshaller;
 
     public MeasurementsUnmarshaller() {
         try {
-            electricityJaxbContext = JAXBContext.newInstance(Electricity.class);
+            JAXBContext electricityJaxbContext = JAXBContext.newInstance(Electricity.class);
             electricityUnmarshaller = electricityJaxbContext.createUnmarshaller();
 
-            solarJaxbContext = JAXBContext.newInstance(Solar.class);
+            JAXBContext solarJaxbContext = JAXBContext.newInstance(Solar.class);
             solarUnmarshaller = solarJaxbContext.createUnmarshaller();
         } catch (JAXBException e) {
             logger.error("Error initialising JAXB unmarshaller", e);
@@ -44,7 +42,7 @@ public class MeasurementsUnmarshaller {
         try {
 
             Electricity unmarshalledObject =
-                    (Electricity) electricityUnmarshaller.unmarshal(new StringReader(xmlString));
+                (Electricity) electricityUnmarshaller.unmarshal(new StringReader(xmlString));
 
             logger.debug("Unmarshalled object {}", unmarshalledObject);
             return unmarshalledObject;

@@ -1,8 +1,9 @@
 # Owl Energy Monitor
 
 [![jdk11](https://img.shields.io/badge/java-11-blue.svg)](http://jdk.java.net/11)
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/858e6fe4bd41487fb8dcfef3450dfc6c)](https://www.codacy.com?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=matteodri/owl-energy-monitor&amp;utm_campaign=Badge_Grade)
 [![CircleCI](https://circleci.com/gh/matteodri/owl-energy-monitor.svg?style=svg&circle-token=9009dea82ca7bb9943613a638e673ce172917f8c)](https://circleci.com/gh/matteodri/owl-energy-monitor)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/858e6fe4bd41487fb8dcfef3450dfc6c)](https://www.codacy.com?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=matteodri/owl-energy-monitor&amp;utm_campaign=Badge_Grade)
+[![Codacy Badge](https://api.codacy.com/project/badge/Coverage/858e6fe4bd41487fb8dcfef3450dfc6c)](https://www.codacy.com?utm_source=github.com&utm_medium=referral&utm_content=matteodri/owl-energy-monitor&utm_campaign=Badge_Coverage)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 ## Purpose
@@ -58,24 +59,23 @@ Service ports as set in _docker-compose.yml_.
 
 **Owl Energy Monitor**
 
-* 7001 - Web endpoint
-* 7002 - JVM debug
-* 7003 - JMX
+*  7001 - Web endpoint
+*  7002 - JVM debug
+*  7003 - JMX
 
 **cAdvisor**
 
-* 8001 - Web endpoint
+*  8001 - Web endpoint
 
 **Prometheus**
 
-* 9090 - Web endpoint
+*  9090 - Web endpoint
 
 **Grafana**
 
-* 6001 - Web endpoint
+*  6001 - Web endpoint
 
 E.g. Grafana web console when running in localhost: <http://localhost:6001/>
-
 
 ## License
 

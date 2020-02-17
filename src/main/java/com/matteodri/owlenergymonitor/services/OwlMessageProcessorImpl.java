@@ -25,7 +25,6 @@ public class OwlMessageProcessorImpl implements OwlMessageProcessor {
 
     private static final Logger logger = LogManager.getLogger(OwlMessageProcessorImpl.class);
 
-    private MeterRegistry meterRegistry;
     private AtomicFloat currentElectricityConsumption = new AtomicFloat(0);
     private AtomicFloat todaysElectricityConsumption = new AtomicFloat(0);
     private AtomicFloat currentBatteryLevel = new AtomicFloat(0);
@@ -38,9 +37,7 @@ public class OwlMessageProcessorImpl implements OwlMessageProcessor {
     private MeasurementsUnmarshaller measurementsUnmarshaller;
 
     public OwlMessageProcessorImpl(MeterRegistry meterRegistry) {
-        this.meterRegistry = meterRegistry;
-
-        setupMetrics(this.meterRegistry);
+        setupMetrics(meterRegistry);
     }
 
     @Override
