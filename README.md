@@ -59,21 +59,21 @@ Service ports as set in _docker-compose.yml_.
 
 **Owl Energy Monitor**
 
-*  7001 - Web endpoint
-*  7002 - JVM debug
-*  7003 - JMX
+*   7001 - Web endpoint
+*   7002 - JVM debug
+*   7003 - JMX
 
 **cAdvisor**
 
-*  8001 - Web endpoint
+*   8001 - Web endpoint
 
 **Prometheus**
 
-*  9090 - Web endpoint
+*   9090 - Web endpoint
 
 **Grafana**
 
-*  6001 - Web endpoint
+*   6001 - Web endpoint
 
 E.g. Grafana web console when running in localhost: <http://localhost:6001/>
 
