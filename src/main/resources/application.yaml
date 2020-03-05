@@ -12,3 +12,6 @@ management:
     web:
       exposure:
         include: health,info,metrics,prometheus
+
+multicast-address: 224.192.32.19
+multicast-port: 22600

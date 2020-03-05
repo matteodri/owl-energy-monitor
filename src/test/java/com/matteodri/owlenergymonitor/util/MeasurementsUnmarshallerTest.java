@@ -34,7 +34,7 @@ public class MeasurementsUnmarshallerTest {
 
     @Test
     @DisplayName("Unmarshal an electricity message")
-    public void testUnmarshalElectricityXml() {
+    public void unmarshalElectricityXml() {
         Electricity electricity = target.unmarshalElectricityXml("<electricity id='44371914D92A' ver='2.0'>"
                 + "  <timestamp>1580421382</timestamp>" + "  <signal rssi='-33' lqi='4'/>" + "  <battery level='100%'/>"
                 + "  <channels>" + "    <chan id='0'>" + "      <curr units='w'>333.00</curr>"
@@ -60,7 +60,7 @@ public class MeasurementsUnmarshallerTest {
 
     @Test
     @DisplayName("Unmarshal an electricity malformed message")
-    public void testUnmarshalElectricityMalformedXml() {
+    public void unmarshalElectricityMalformedXml() {
         Exception exception = assertThrows(IllegalArgumentException.class, () -> {
             target.unmarshalElectricityXml("< this is not XML>--..");
         });
@@ -70,7 +70,7 @@ public class MeasurementsUnmarshallerTest {
 
     @Test
     @DisplayName("Unmarshal a solar message")
-    public void testUnmarshalSolarXml() {
+    public void unmarshalSolarXml() {
         Solar solar =
                 target.unmarshalSolarXml("<solar id=\"44371914D92A\">\n" + "   <timestamp>1580417543</timestamp>\n"
                         + "   <current>\n" + "      <generating units=\"w\">250.00</generating>\n"
@@ -101,7 +101,7 @@ public class MeasurementsUnmarshallerTest {
 
     @Test
     @DisplayName("Unmarshal a solar malformed message")
-    public void testUnmarshalSolarMalformedXml() {
+    public void unmarshalSolarMalformedXml() {
         Exception exception = assertThrows(IllegalArgumentException.class, () -> {
             target.unmarshalSolarXml("< this is not XML>--..");
         });

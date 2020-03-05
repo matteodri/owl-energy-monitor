@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.matteodri.owlenergymonitor.model.electricity.Electricity;
 import com.matteodri.owlenergymonitor.model.solar.Solar;
-import com.matteodri.owlenergymonitor.util.AtomicFloat;
+import com.matteodri.owlenergymonitor.util.AtomicDouble;
 import com.matteodri.owlenergymonitor.util.MeasurementsUnmarshaller;
 
 import io.micrometer.core.instrument.Gauge;
@@ -25,13 +25,13 @@ public class OwlMessageProcessorImpl implements OwlMessageProcessor {
 
     private static final Logger logger = LogManager.getLogger(OwlMessageProcessorImpl.class);
 
-    private AtomicFloat currentElectricityConsumption = new AtomicFloat(0);
-    private AtomicFloat todaysElectricityConsumption = new AtomicFloat(0);
-    private AtomicFloat currentBatteryLevel = new AtomicFloat(0);
-    private AtomicFloat currentElectricityGenerated = new AtomicFloat(0);
-    private AtomicFloat currentElectricityExported = new AtomicFloat(0);
-    private AtomicFloat todaysElectricityGenerated = new AtomicFloat(0);
-    private AtomicFloat todaysElectricityExported = new AtomicFloat(0);
+    private AtomicDouble currentElectricityConsumption = new AtomicDouble(0);
+    private AtomicDouble todaysElectricityConsumption = new AtomicDouble(0);
+    private AtomicDouble currentBatteryLevel = new AtomicDouble(0);
+    private AtomicDouble currentElectricityGenerated = new AtomicDouble(0);
+    private AtomicDouble currentElectricityExported = new AtomicDouble(0);
+    private AtomicDouble todaysElectricityGenerated = new AtomicDouble(0);
+    private AtomicDouble todaysElectricityExported = new AtomicDouble(0);
 
     @Autowired
     private MeasurementsUnmarshaller measurementsUnmarshaller;
@@ -56,7 +56,7 @@ public class OwlMessageProcessorImpl implements OwlMessageProcessor {
                 }
                 if (electricityMeasurement.getChannels().get(0).getElectricityDay() != null) {
                     todaysElectricityConsumption
-                            .set(electricityMeasurement.getChannels().get(0).getElectricityDay().getValue());
+                            .set(electricityMeasurement.getChannels().get(0).getElectricityDay().getValue());// todaysElectricityConsumption.floatValue()
                 }
             }
 
@@ -96,19 +96,19 @@ public class OwlMessageProcessorImpl implements OwlMessageProcessor {
     }
 
     private void setupMetrics(MeterRegistry meterRegistry) {
-        Gauge.builder("electricity_consumption_current", currentElectricityConsumption, AtomicFloat::get)
+        Gauge.builder(Metrics.ELECTRICITY_CONSUMPTION_CURRENT, currentElectricityConsumption, AtomicDouble::get)
                 .description("Current electricity consumption (W)").register(meterRegistry);
-        Gauge.builder("electricity_consumption_today", todaysElectricityConsumption, AtomicFloat::get)
+        Gauge.builder(Metrics.ELECTRICITY_CONSUMPTION_TODAY, todaysElectricityConsumption, AtomicDouble::get)
                 .description("Today's electricity consumption (Wh)").register(meterRegistry);
-        Gauge.builder("battery_level_current", currentBatteryLevel, AtomicFloat::get)
+        Gauge.builder(Metrics.BATTERY_LEVEL_CURRENT, currentBatteryLevel, AtomicDouble::get)
                 .description("Current battery level (%)").register(meterRegistry);
-        Gauge.builder("electricity_generated_current", currentElectricityGenerated, AtomicFloat::get)
+        Gauge.builder(Metrics.ELECTRICITY_GENERATED_CURRENT, currentElectricityGenerated, AtomicDouble::get)
                 .description("Current electricity generation (W)").register(meterRegistry);
-        Gauge.builder("electricity_exported_current", currentElectricityExported, AtomicFloat::get)
+        Gauge.builder(Metrics.ELECTRICITY_EXPORTED_CURRENT, currentElectricityExported, AtomicDouble::get)
                 .description("Current electricity exporting (W)").register(meterRegistry);
-        Gauge.builder("electricity_generated_today", todaysElectricityGenerated, AtomicFloat::get)
+        Gauge.builder(Metrics.ELECTRICITY_GENERATED_TODAY, todaysElectricityGenerated, AtomicDouble::get)
                 .description("Today's generated electricity (Wh)").register(meterRegistry);
-        Gauge.builder("electricity_exported_today", todaysElectricityExported, AtomicFloat::get)
+        Gauge.builder(Metrics.ELECTRICITY_EXPORTED_TODAY, todaysElectricityExported, AtomicDouble::get)
                 .description("Today's exported electricity (Wh)").register(meterRegistry);
     }
 
@@ -119,11 +119,11 @@ public class OwlMessageProcessorImpl implements OwlMessageProcessor {
      * @param strPercentage percentage in string format including a trailing '%' sign
      * @return floating-point representation of percentage value
      */
-    private float parsePercentage(String strPercentage) {
-        float returnValue = -1;
+    private double parsePercentage(String strPercentage) {
+        double returnValue = -1;
         if (strPercentage != null && !strPercentage.isEmpty() && strPercentage.endsWith("%")) {
             try {
-                returnValue = Float.valueOf(strPercentage.substring(0, strPercentage.indexOf('%')));
+                returnValue = Double.valueOf(strPercentage.substring(0, strPercentage.indexOf('%')));
             } catch (NumberFormatException e) {
                 logger.warn("Error parsing percentage '{}'", strPercentage);
             }

@@ -42,7 +42,7 @@ public class MeasurementsUnmarshaller {
         try {
 
             Electricity unmarshalledObject =
-                (Electricity) electricityUnmarshaller.unmarshal(new StringReader(xmlString));
+                    (Electricity) electricityUnmarshaller.unmarshal(new StringReader(xmlString));
 
             logger.debug("Unmarshalled object {}", unmarshalledObject);
             return unmarshalledObject;
