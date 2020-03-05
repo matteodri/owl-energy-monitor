@@ -96,19 +96,19 @@ public class OwlMessageProcessorImpl implements OwlMessageProcessor {
     }
 
     private void setupMetrics(MeterRegistry meterRegistry) {
-        Gauge.builder(Metrics.ELECTRICITY_CONSUMPTION_CURRENT, currentElectricityConsumption, AtomicDouble::get)
+        Gauge.builder(MetricsUtils.ELECTRICITY_CONSUMPTION_CURRENT, currentElectricityConsumption, AtomicDouble::get)
                 .description("Current electricity consumption (W)").register(meterRegistry);
-        Gauge.builder(Metrics.ELECTRICITY_CONSUMPTION_TODAY, todaysElectricityConsumption, AtomicDouble::get)
+        Gauge.builder(MetricsUtils.ELECTRICITY_CONSUMPTION_TODAY, todaysElectricityConsumption, AtomicDouble::get)
                 .description("Today's electricity consumption (Wh)").register(meterRegistry);
-        Gauge.builder(Metrics.BATTERY_LEVEL_CURRENT, currentBatteryLevel, AtomicDouble::get)
+        Gauge.builder(MetricsUtils.BATTERY_LEVEL_CURRENT, currentBatteryLevel, AtomicDouble::get)
                 .description("Current battery level (%)").register(meterRegistry);
-        Gauge.builder(Metrics.ELECTRICITY_GENERATED_CURRENT, currentElectricityGenerated, AtomicDouble::get)
+        Gauge.builder(MetricsUtils.ELECTRICITY_GENERATED_CURRENT, currentElectricityGenerated, AtomicDouble::get)
                 .description("Current electricity generation (W)").register(meterRegistry);
-        Gauge.builder(Metrics.ELECTRICITY_EXPORTED_CURRENT, currentElectricityExported, AtomicDouble::get)
+        Gauge.builder(MetricsUtils.ELECTRICITY_EXPORTED_CURRENT, currentElectricityExported, AtomicDouble::get)
                 .description("Current electricity exporting (W)").register(meterRegistry);
-        Gauge.builder(Metrics.ELECTRICITY_GENERATED_TODAY, todaysElectricityGenerated, AtomicDouble::get)
+        Gauge.builder(MetricsUtils.ELECTRICITY_GENERATED_TODAY, todaysElectricityGenerated, AtomicDouble::get)
                 .description("Today's generated electricity (Wh)").register(meterRegistry);
-        Gauge.builder(Metrics.ELECTRICITY_EXPORTED_TODAY, todaysElectricityExported, AtomicDouble::get)
+        Gauge.builder(MetricsUtils.ELECTRICITY_EXPORTED_TODAY, todaysElectricityExported, AtomicDouble::get)
                 .description("Today's exported electricity (Wh)").register(meterRegistry);
     }
 

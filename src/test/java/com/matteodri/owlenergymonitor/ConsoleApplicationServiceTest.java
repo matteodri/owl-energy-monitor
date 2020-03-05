@@ -29,7 +29,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.test.context.TestPropertySource;
 
-import com.matteodri.owlenergymonitor.services.Metrics;
+import com.matteodri.owlenergymonitor.services.MetricsUtils;
 
 /**
  * Service test to verify the functionality of the application bringing up the Spring context and testing the API.
@@ -56,7 +56,7 @@ public class ConsoleApplicationServiceTest {
     private OkHttpClient httpClient;
 
     @BeforeEach
-    void setUp() {
+    public void setUp() {
         httpClient = new OkHttpClient.Builder().connectTimeout(2_000L, TimeUnit.MILLISECONDS)
                 .writeTimeout(2_000L, TimeUnit.MILLISECONDS).readTimeout(2_000, TimeUnit.MILLISECONDS).build();
     }
@@ -134,13 +134,13 @@ public class ConsoleApplicationServiceTest {
         int metricsFoundCount = 0;
 
         for (String line : responseLines) {
-            if (line.startsWith(Metrics.ELECTRICITY_CONSUMPTION_CURRENT)) {
+            if (line.startsWith(MetricsUtils.ELECTRICITY_CONSUMPTION_CURRENT)) {
                 assertEquals(E_CONSUMPTION_CURRENT, Double.valueOf(line.split(" ")[1]), TOLERANCE);
                 metricsFoundCount++;
-            } else if (line.startsWith(Metrics.ELECTRICITY_CONSUMPTION_TODAY)) {
+            } else if (line.startsWith(MetricsUtils.ELECTRICITY_CONSUMPTION_TODAY)) {
                 assertEquals(E_CONSUMPTION_TODAY, Double.valueOf(line.split(" ")[1]), TOLERANCE);
                 metricsFoundCount++;
-            } else if (line.startsWith(Metrics.BATTERY_LEVEL_CURRENT)) {
+            } else if (line.startsWith(MetricsUtils.BATTERY_LEVEL_CURRENT)) {
                 assertEquals(E_BATTERY_LEVEL_CURRENT, Double.valueOf(line.split(" ")[1]), TOLERANCE);
                 metricsFoundCount++;
             }
@@ -152,16 +152,16 @@ public class ConsoleApplicationServiceTest {
         int metricsFoundCount = 0;
 
         for (String line : responseLines) {
-            if (line.startsWith(Metrics.ELECTRICITY_GENERATED_CURRENT)) {
+            if (line.startsWith(MetricsUtils.ELECTRICITY_GENERATED_CURRENT)) {
                 assertEquals(E_GENERATED_CURRENT, Double.valueOf(line.split(" ")[1]), TOLERANCE);
                 metricsFoundCount++;
-            } else if (line.startsWith(Metrics.ELECTRICITY_GENERATED_TODAY)) {
+            } else if (line.startsWith(MetricsUtils.ELECTRICITY_GENERATED_TODAY)) {
                 assertEquals(E_GENERATED_TODAY, Double.valueOf(line.split(" ")[1]), TOLERANCE);
                 metricsFoundCount++;
-            } else if (line.startsWith(Metrics.ELECTRICITY_EXPORTED_CURRENT)) {
+            } else if (line.startsWith(MetricsUtils.ELECTRICITY_EXPORTED_CURRENT)) {
                 assertEquals(E_EXPORTED_CURRENT, Double.valueOf(line.split(" ")[1]), TOLERANCE);
                 metricsFoundCount++;
-            } else if (line.startsWith(Metrics.ELECTRICITY_EXPORTED_TODAY)) {
+            } else if (line.startsWith(MetricsUtils.ELECTRICITY_EXPORTED_TODAY)) {
                 assertEquals(E_EXPORTED_TODAY, Double.valueOf(line.split(" ")[1]), TOLERANCE);
                 metricsFoundCount++;
             }
