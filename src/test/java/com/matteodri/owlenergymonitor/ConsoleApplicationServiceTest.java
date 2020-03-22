@@ -35,8 +35,9 @@ import com.matteodri.owlenergymonitor.services.MetricsUtils;
  * Service test to verify the functionality of the application bringing up the Spring context and testing the API.
  */
 @Disabled
-@SpringBootTest(webEnvironment = WebEnvironment.DEFINED_PORT)
-@TestPropertySource(properties = {"multicast-address:224.0.0.10", "multicast-port = 10000", "server.port = 6999"})
+@SpringBootTest(webEnvironment = WebEnvironment.DEFINED_PORT, classes = OwlEnergyMonitorApplication.class)
+@TestPropertySource(properties = {"multicast-address:224.0.0.10", "multicast-port = 10000", "server.port = 6999",
+        "multicast-listener-delay = 10"})
 // @ContextConfiguration(classes = {ConsoleApplication.class},
 // initializers = ConfigFileApplicationContextInitializer.class)
 public class ConsoleApplicationServiceTest {
@@ -49,9 +50,7 @@ public class ConsoleApplicationServiceTest {
     private static final double E_GENERATED_TODAY = 8790.56;
     private static final double E_EXPORTED_CURRENT = 340.12;
     private static final double E_EXPORTED_TODAY = 1378.23;
-
     private static final double TOLERANCE = 0.001;
-
 
     private OkHttpClient httpClient;
 
@@ -64,9 +63,7 @@ public class ConsoleApplicationServiceTest {
     @Test
     @DisplayName("Electricity message processed")
     public void electricityMessageProcessed() throws Exception {
-
         // Console application is up
-
         String electircityPayload =
                 "<electricity id='44371914D92A' ver='2.0'><timestamp>1581890782</timestamp><signal rssi='-33' lqi='0'/><battery level='"
                         + E_BATTERY_LEVEL_CURRENT + "%'/><channels><chan id='0'><curr units='w'>"
@@ -78,8 +75,8 @@ public class ConsoleApplicationServiceTest {
                 + "</generated><exported units='wh'>" + E_EXPORTED_TODAY + "</exported></day></solar>";
 
         // publish multicast messages
-        publishMulticastMessage("224.0.0.10", 10000, electircityPayload);
-        publishMulticastMessage("224.0.0.10", 10000, solarPayload);
+        publishMulticastMessage("224.0.0.10", 10_000, electircityPayload);
+        publishMulticastMessage("224.0.0.10", 10_000, solarPayload);
 
         // thread to wait for onResponse completion, if times out then fail
         CompletableFuture<Response> responseFuture = new CompletableFuture<>();

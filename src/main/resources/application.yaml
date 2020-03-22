@@ -15,3 +15,4 @@ management:
 
 multicast-address: 224.192.32.19
 multicast-port: 22600
+multicast-listener-delay: 2000

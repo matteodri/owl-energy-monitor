@@ -8,7 +8,6 @@ import javax.xml.bind.Unmarshaller;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.springframework.stereotype.Component;
 
 import com.matteodri.owlenergymonitor.model.electricity.Electricity;
 import com.matteodri.owlenergymonitor.model.solar.Solar;
@@ -18,7 +17,6 @@ import com.matteodri.owlenergymonitor.services.OwlMessageProcessorImpl;
  * Service responsible for unmarshalling the XML messages into measurement objects.
  */
 
-@Component
 public class MeasurementsUnmarshaller {
 
     private static final Logger logger = LogManager.getLogger(OwlMessageProcessorImpl.class);
