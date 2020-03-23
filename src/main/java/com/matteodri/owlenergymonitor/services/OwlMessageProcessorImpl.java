@@ -173,7 +173,7 @@ public class OwlMessageProcessorImpl implements OwlMessageProcessor {
 
         @Override
         public void run() {
-            logger.debug("Checking packets on multicast socket");
+            logger.debug("Waiting for packets on multicast socket");
             try {
                 socket.receive(inPacket);
                 String payload = new String(inBuf, 0, inPacket.getLength());

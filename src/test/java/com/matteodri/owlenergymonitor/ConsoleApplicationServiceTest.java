@@ -22,7 +22,6 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -34,12 +33,11 @@ import com.matteodri.owlenergymonitor.services.MetricsUtils;
 /**
  * Service test to verify the functionality of the application bringing up the Spring context and testing the API.
  */
-@Disabled
-@SpringBootTest(webEnvironment = WebEnvironment.DEFINED_PORT, classes = OwlEnergyMonitorApplication.class)
+@SpringBootTest(webEnvironment = WebEnvironment.DEFINED_PORT,
+        classes = {OwlEnergyMonitorApplication.class, MainConfig.class})
 @TestPropertySource(properties = {"multicast-address:224.0.0.10", "multicast-port = 10000", "server.port = 6999",
         "multicast-listener-delay = 10"})
-// @ContextConfiguration(classes = {ConsoleApplication.class},
-// initializers = ConfigFileApplicationContextInitializer.class)
+
 public class ConsoleApplicationServiceTest {
 
     private static final String PROMETHEUS_ENDPOINT = "http://localhost:6999/actuator/prometheus";
