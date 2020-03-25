@@ -87,7 +87,7 @@ public class OwlMessageProcessorImpl implements OwlMessageProcessor {
                     "Metrics set:\ncurrentElectricityConsumption={}, todaysElectricityConsumption={}, "
                             + "currentBatteryLevel={}",
                     currentElectricityConsumption, todaysElectricityConsumption, currentBatteryLevel);
-        } else {
+        } else if (message.startsWith("<solar")) {
             // it's a solar measurement summary
             Solar solarMeasurement = measurementsUnmarshaller.unmarshalSolarXml(message);
 
@@ -111,6 +111,9 @@ public class OwlMessageProcessorImpl implements OwlMessageProcessor {
                             + "todaysElectricityGenerated={}, todaysElectricityExported={}",
                     currentElectricityGenerated, currentElectricityExported, todaysElectricityGenerated,
                     todaysElectricityExported);
+        } else {
+            // it's an unrecognised message
+            logger.warn("Unrecognised message received from {}: {}", fromAddress, message);
         }
     }
 

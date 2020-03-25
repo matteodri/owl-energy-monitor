@@ -8,7 +8,7 @@ module com.matteodri.owl.energy.monitor {
     requires spring.boot.actuator.autoconfigure;
     requires micrometer.core;
     requires java.xml.bind;
-    requires java.activation;
+    requires com.fasterxml.classmate;
     opens com.matteodri.owlenergymonitor;
     opens com.matteodri.owlenergymonitor.services;
     opens com.matteodri.owlenergymonitor.util;
