@@ -22,8 +22,6 @@ The	Network	OWL	sends	UDP	packets	to the	following	multicast	group:
 
 Information on message format can be found here: [Multicast and UDP API information](https://theowl.zendesk.com/hc/en-gb/articles/201284603-Multicast-UDP-API-Information).
 
-## Requirements
-
 ## Build
 Check if code complies with formatting template:
 
@@ -41,6 +39,11 @@ Push image to the registry:
 
 `mvn deploy`
 
+## Required applications on host
+* Docker: version 17.09.0+
+* Docker Compose: version 1.17.0+
+* Iperf
+
 ## Run
 Run owl-energy-monitor Spring Boot application only with Java command:
 
@@ -53,6 +56,12 @@ Build, create, start, and attach to the containers of the Owl Energy Monitor ser
 Build, create and start a specific container.
 
 `docker-compose -f docker/docker-compose.yml up -d prometheus`
+
+On the host this also needs to be running:
+
+`iperf -s -u -B 224.192.32.19 -p 22600 -i 2`
+
+This runs _iperf_ in server mode binding to Owl multicast address. Allows the owl-energy-monitor to receive multicast packets.
 
 ## Default endpoints
 Service ports as set in _docker-compose.yml_.

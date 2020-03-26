@@ -1,4 +1,4 @@
-version: '2.4'
+version: '3.4'
 services:
 
   ###############################################
@@ -10,8 +10,6 @@ services:
     build: ./prometheus/
     command: ["--config.file=/etc/prometheus/config/prometheus.yml", "--storage.tsdb.retention.time=168h"]
     user: root
-    mem_limit: 512m
-    memswap_limit: 512m
     ports:
       - "9090:9090"
     networks:
@@ -46,8 +44,7 @@ services:
         source: dashboards
         target: /var/lib/grafana
     depends_on:
-      prometheus:
-        condition: service_healthy
+      - prometheus
     healthcheck:
       test: ["CMD", "curl", "-sl", "-I", "http://localhost:3000/api/health"]
       interval: 20s
@@ -105,8 +102,7 @@ services:
     networks:
       - local
     depends_on:
-      prometheus:
-        condition: service_healthy
+      - prometheus
     healthcheck:
       test: ["CMD", "curl", "-sl", "-I", "http://localhost:7001/actuator/health"]
       interval: 30s
