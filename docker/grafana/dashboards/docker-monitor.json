@@ -2097,7 +2097,7 @@
       "type": "table"
     }
   ],
-  "refresh": "5m",
+  "refresh": "30s",
   "schemaVersion": 16,
   "style": "dark",
   "tags": [],
@@ -2258,7 +2258,7 @@
     ]
   },
   "time": {
-    "from": "now-24h",
+    "from": "now-1h",
     "to": "now"
   },
   "timepicker": {
