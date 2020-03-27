@@ -28,8 +28,6 @@ datasources:
     basicAuth: false
     # <string> basic auth username
     basicAuthUser: admin
-    # <string> basic auth password
-    basicAuthPassword: foobar
     # <bool> enable/disable with credentials headers
     withCredentials:
     # <bool> mark as default datasource. Max one per org
@@ -41,6 +39,7 @@ datasources:
       tlsAuthWithCACert: false
     # <string> json object of data that will be encrypted.
     secureJsonData:
+      basicAuthPassword: admin
       tlsCACert: "..."
       tlsClientCert: "..."
       tlsClientKey: "..."

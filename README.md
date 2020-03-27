@@ -49,7 +49,7 @@ Run owl-energy-monitor Spring Boot application only with Java command:
 
 `java -jar target/owl-energy-monitor-<version>.jar`
 
-Build, create, start, and attach to the containers of the Owl Energy Monitor service with Docker Compose.
+Build, create, start, and attach to the containers of the Owl Energy Monitor service with Docker Compose. Add _-d_ to run in detached mode.
 
 `docker-compose -f docker/docker-compose.yml up`
 
