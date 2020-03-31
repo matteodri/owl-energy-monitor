@@ -29,9 +29,11 @@ public class OwlMessageProcessorImpl implements OwlMessageProcessor {
     private AtomicDouble todaysElectricityConsumption = new AtomicDouble(0);
     private AtomicDouble currentBatteryLevel = new AtomicDouble(0);
     private AtomicDouble currentElectricityGenerated = new AtomicDouble(0);
-    private AtomicDouble currentElectricityExported = new AtomicDouble(0);
     private AtomicDouble todaysElectricityGenerated = new AtomicDouble(0);
+    private AtomicDouble currentElectricityExported = new AtomicDouble(0);
     private AtomicDouble todaysElectricityExported = new AtomicDouble(0);
+    private AtomicDouble currentElectricityImported = new AtomicDouble(0);
+    private AtomicDouble todaysElectricityImported = new AtomicDouble(0);
 
     private MeterRegistry meterRegistry;
     private MeasurementsUnmarshaller measurementsUnmarshaller;
@@ -93,8 +95,12 @@ public class OwlMessageProcessorImpl implements OwlMessageProcessor {
 
             if (solarMeasurement != null && solarMeasurement.getSolarCurrent() != null) {
                 if (solarMeasurement.getSolarCurrent().getGenerating() != null) {
-                    currentElectricityGenerated.set(solarMeasurement.getSolarCurrent().getGenerating().getValue());
+                    double currentGeneration = solarMeasurement.getSolarCurrent().getGenerating().getValue();
+                    double currentGridBalance = currentElectricityConsumption.get() - currentGeneration;
+                    currentElectricityGenerated.set(currentGeneration);
+                    currentElectricityImported.set(currentGridBalance > 0 ? currentGridBalance : 0);
                 }
+
                 if (solarMeasurement.getSolarCurrent().getExporting() != null) {
                     currentElectricityExported.set(solarMeasurement.getSolarCurrent().getExporting().getValue());
                 }
@@ -105,12 +111,17 @@ public class OwlMessageProcessorImpl implements OwlMessageProcessor {
                 if (solarMeasurement.getSolarDay().getExported() != null) {
                     todaysElectricityExported.set(solarMeasurement.getSolarDay().getExported().getValue());
                 }
+
+                // imported = consumption - (generation - exported)
+                double importedToday = todaysElectricityConsumption.get()
+                        - (todaysElectricityGenerated.get() - todaysElectricityExported.get());
+                todaysElectricityImported.set(importedToday > 0 ? importedToday : 0);
             }
-            logger.debug(
-                    "Metrics set:\ncurrentElectricityGenerated={}, currentElectricityExported={}, "
-                            + "todaysElectricityGenerated={}, todaysElectricityExported={}",
-                    currentElectricityGenerated, currentElectricityExported, todaysElectricityGenerated,
-                    todaysElectricityExported);
+            logger.debug("Metrics set:\ncurrentElectricityGenerated={}, currentElectricityExported={}, "
+                    + "currentElectricityImported={}, todaysElectricityGenerated={}, todaysElectricityExported={},"
+                    + "todaysElectricityImported={}", currentElectricityGenerated, currentElectricityExported,
+                    currentElectricityImported, todaysElectricityGenerated, todaysElectricityExported,
+                    todaysElectricityImported);
         } else {
             // it's an unrecognised message
             logger.warn("Unrecognised message received from {}: {}", fromAddress, message);
@@ -126,12 +137,16 @@ public class OwlMessageProcessorImpl implements OwlMessageProcessor {
                 .description("Current battery level (%)").register(meterRegistry);
         Gauge.builder(MetricsUtils.ELECTRICITY_GENERATED_CURRENT, currentElectricityGenerated, AtomicDouble::get)
                 .description("Current electricity generation (W)").register(meterRegistry);
-        Gauge.builder(MetricsUtils.ELECTRICITY_EXPORTED_CURRENT, currentElectricityExported, AtomicDouble::get)
-                .description("Current electricity exporting (W)").register(meterRegistry);
         Gauge.builder(MetricsUtils.ELECTRICITY_GENERATED_TODAY, todaysElectricityGenerated, AtomicDouble::get)
                 .description("Today's generated electricity (Wh)").register(meterRegistry);
+        Gauge.builder(MetricsUtils.ELECTRICITY_EXPORTED_CURRENT, currentElectricityExported, AtomicDouble::get)
+                .description("Current electricity exporting (W)").register(meterRegistry);
         Gauge.builder(MetricsUtils.ELECTRICITY_EXPORTED_TODAY, todaysElectricityExported, AtomicDouble::get)
                 .description("Today's exported electricity (Wh)").register(meterRegistry);
+        Gauge.builder(MetricsUtils.ELECTRICITY_IMPORTED_CURRENT, currentElectricityImported, AtomicDouble::get)
+                .description("Current electricity importing (W)").register(meterRegistry);
+        Gauge.builder(MetricsUtils.ELECTRICITY_IMPORTED_TODAY, todaysElectricityImported, AtomicDouble::get)
+                .description("Today's imported electricity (Wh)").register(meterRegistry);
     }
 
     /**

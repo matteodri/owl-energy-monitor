@@ -80,12 +80,20 @@
           "refId": "B"
         },
         {
+          "expr": "electricity_imported_current",
+          "format": "time_series",
+          "hide": false,
+          "intervalFactor": 1,
+          "legendFormat": "imported electricity (W)",
+          "refId": "C"
+        },
+        {
           "expr": "electricity_exported_current",
           "format": "time_series",
           "hide": false,
           "intervalFactor": 1,
           "legendFormat": "exported electricity (W)",
-          "refId": "C"
+          "refId": "D"
         }
       ],
       "thresholds": [],
@@ -190,11 +198,18 @@
           "refId": "B"
         },
         {
+          "expr": "electricity_imported_today",
+          "format": "time_series",
+          "intervalFactor": 1,
+          "legendFormat": "imported elctricity (Wh)",
+          "refId": "C"
+        },
+        {
           "expr": "electricity_exported_today",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "exported elctricity (Wh)",
-          "refId": "C"
+          "refId": "D"
         }
       ],
       "thresholds": [],

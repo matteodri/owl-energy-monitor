@@ -48,6 +48,8 @@ public class ConsoleApplicationServiceTest {
     private static final double E_GENERATED_TODAY = 8790.56;
     private static final double E_EXPORTED_CURRENT = 340.12;
     private static final double E_EXPORTED_TODAY = 1378.23;
+    private static final double E_IMPORTED_CURRENT = 0;
+    private static final double E_IMPORTED_TODAY = 242.06;
     private static final double TOLERANCE = 0.001;
 
     private OkHttpClient httpClient;
@@ -90,6 +92,7 @@ public class ConsoleApplicationServiceTest {
                 }
                 verifyElectricityStats(responseLines);
                 verifySolarStats(responseLines);
+                verifyCalculatedStats(responseLines);
                 responseFuture.complete(response);
             }
 
@@ -164,4 +167,18 @@ public class ConsoleApplicationServiceTest {
         assertEquals(4, metricsFoundCount);
     }
 
+    private void verifyCalculatedStats(List<String> responseLines) {
+        int metricsFoundCount = 0;
+
+        for (String line : responseLines) {
+            if (line.startsWith(MetricsUtils.ELECTRICITY_IMPORTED_CURRENT)) {
+                assertEquals(E_IMPORTED_CURRENT, Double.valueOf(line.split(" ")[1]), TOLERANCE);
+                metricsFoundCount++;
+            } else if (line.startsWith(MetricsUtils.ELECTRICITY_IMPORTED_TODAY)) {
+                assertEquals(E_IMPORTED_TODAY, Double.valueOf(line.split(" ")[1]), TOLERANCE);
+                metricsFoundCount++;
+            }
+        }
+        assertEquals(2, metricsFoundCount);
+    }
 }

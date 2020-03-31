@@ -1,6 +1,6 @@
 FROM grafana/grafana:6.7.1
 LABEL maintainer="Matteo Dri" \
-      version="0.1.0" \
+      version="0.2.0" \
       description="Grafana image"
 
 COPY ./datasources/ /etc/grafana/provisioning/datasources/
