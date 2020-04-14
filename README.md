@@ -44,10 +44,6 @@ Build the Docker image
 
 `mvn clean package`
 
-Push image to the registry:
-
-`mvn deploy`
-
 ## Required applications on host
 * Docker: version 17.09.0+
 * Docker Compose: version 1.17.0+
