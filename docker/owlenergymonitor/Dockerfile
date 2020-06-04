@@ -1,6 +1,10 @@
-FROM openjdk:11-jdk
+# Base image for linux/amd64 architectures
+#FROM openjdk:11-jdk
+
+# Base image for Raspberry-pi2 (armv6) architectures
+FROM balenalib/raspberry-pi2-debian-openjdk:11-jre-buster
+
 LABEL maintainer="Matteo Dri" \
-      version="0.1.0" \
       description="Owl Energy Monitor image"
 
 COPY /target/owl-energy-monitor-*.jar /app/owl-energy-monitor.jar

@@ -62,13 +62,13 @@ services:
   ###############################################
   cadvisor:
     container_name: cadvisor
-    image: google/cadvisor:v0.33.0
+    image: budry/cadvisor-arm:v0.30.2
     ports:
       - "8001:8080"
     volumes:
       - /:/rootfs:ro
       - /var/run:/var/run:rw
-      - /sys:/sys:ro
+      - /sys:/sys
       - /var/lib/docker/:/var/lib/docker:ro
       - /dev/disk/:/dev/disk:ro
     privileged: true
