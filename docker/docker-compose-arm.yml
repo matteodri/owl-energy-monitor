@@ -62,7 +62,7 @@ services:
   ###############################################
   cadvisor:
     container_name: cadvisor
-    image: budry/cadvisor-arm:v0.30.2
+    image: budry/cadvisor-arm:0.30.2
     ports:
       - "8001:8080"
     volumes:
