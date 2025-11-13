@@ -23,7 +23,7 @@
     <org.glassfish.jaxb.version>2.3.2</org.glassfish.jaxb.version>
     <org.junit.jupiter.version>5.5.2</org.junit.jupiter.version>
     <org.mockito.version>3.1.0</org.mockito.version>
-    <com.squareup.okhttp3.version>4.3.1</com.squareup.okhttp3.version>
+    <com.squareup.okhttp3.version>4.9.2</com.squareup.okhttp3.version>
     <maven-surefire-plugin.version>2.22.2</maven-surefire-plugin.version>
     <jacoco-maven-plugin.version>0.8.5</jacoco-maven-plugin.version>
     <spotless-maven-plugin.version>1.27.0</spotless-maven-plugin.version>
