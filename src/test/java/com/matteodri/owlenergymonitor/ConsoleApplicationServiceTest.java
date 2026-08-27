@@ -24,7 +24,7 @@ import okhttp3.Response;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.autoconfigure.actuate.metrics.AutoConfigureMetrics;
+import org.springframework.boot.test.autoconfigure.actuate.observability.AutoConfigureObservability;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.test.context.TestPropertySource;
@@ -36,7 +36,7 @@ import com.matteodri.owlenergymonitor.services.MetricsUtils;
  */
 @SpringBootTest(webEnvironment = WebEnvironment.DEFINED_PORT,
         classes = {OwlEnergyMonitorApplication.class, MainConfig.class})
-@AutoConfigureMetrics
+@AutoConfigureObservability
 @TestPropertySource(properties = {"multicast-address:224.0.0.10", "multicast-port = 10000", "server.port = 6999",
         "multicast-listener-delay = 10"})
 

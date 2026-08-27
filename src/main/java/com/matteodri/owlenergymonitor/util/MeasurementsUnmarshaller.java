@@ -2,16 +2,16 @@ package com.matteodri.owlenergymonitor.util;
 
 import java.io.StringReader;
 
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Unmarshaller;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.matteodri.owlenergymonitor.model.electricity.Electricity;
 import com.matteodri.owlenergymonitor.model.solar.Solar;
 import com.matteodri.owlenergymonitor.services.OwlMessageProcessorImpl;
+
+import jakarta.xml.bind.JAXBContext;
+import jakarta.xml.bind.JAXBException;
+import jakarta.xml.bind.Unmarshaller;
 
 /**
  * Service responsible for unmarshalling the XML messages into measurement objects.

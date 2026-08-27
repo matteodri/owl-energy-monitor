@@ -1,8 +1,12 @@
 # Base image for linux/amd64 architectures
-#FROM openjdk:11-jdk
+#FROM eclipse-temurin:17-jre
 
-# Base image for Raspberry-pi2 (armv6) architectures
-FROM balenalib/raspberry-pi2-debian-openjdk:11-jre-buster
+# Base image for Raspberry-pi2 (armv7) architectures.
+# balenalib/raspberry-pi2-debian-openjdk only ships up to Java 11, so we use the
+# plain Debian bullseye base and install the distro's OpenJDK 17 headless JRE
+# (available for armhf in bullseye main).
+FROM balenalib/raspberry-pi2-debian:bullseye-run
+RUN install_packages openjdk-17-jre-headless
 
 LABEL maintainer="Matteo Dri" \
       description="Owl Energy Monitor image"
